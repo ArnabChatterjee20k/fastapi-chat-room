@@ -1,11 +1,12 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 import json
+from db import Messages
 
 app = FastAPI()
 
 connected_clients = set()
-messages = []
+messages = [] # in memory cache 
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
