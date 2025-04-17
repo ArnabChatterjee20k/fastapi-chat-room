@@ -12,7 +12,7 @@ async def clear_messages():
     global messages
     while True:
         messages = [] 
-        await asyncio.sleep(3000)
+        await asyncio.sleep(600)
 
 @asynccontextmanager
 async def startup_event(app: FastAPI):
