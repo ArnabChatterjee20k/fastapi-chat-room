@@ -21,7 +21,8 @@
     <button onclick="sendMessage()">Send</button>
 
     <script>
-      const ws = new WebSocket(`ws://${window.location.host}/ws`);
+      const origin = window.origin;
+      const ws = new WebSocket(`${origin.startsWith("https")?"wss":"ws"}://${window.location.host}/ws`);
       const log = document.getElementById("log");
 
       ws.onmessage = (event) => {
