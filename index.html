@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Event WebSocket</title>
+  </head>
+  <body>
+    <h2>WebSocket Event Test</h2>
+    <textarea id="log" rows="10" cols="40" readonly></textarea><br />
+    <input id="msg" type="text" placeholder="Type a message" />
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+      const ws = new WebSocket("ws://localhost:8000/ws");
+      ws.onmessage = (event) => {
+        console.log(event.data)
+        const log = document.getElementById("log");
+        log.value += event.data + "\\n";
+      };
+
+      function sendMessage() {
+        const input = document.getElementById("msg");
+        const payload = {
+          event: "add_message",
+          data: input.value,
+        };
+        ws.send(JSON.stringify(payload));
+        input.value = "";
+      }
+    </script>
+  </body>
+</html>
