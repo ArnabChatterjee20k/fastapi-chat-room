@@ -1,19 +1,34 @@
 <html>
   <head>
     <title>Event WebSocket</title>
+    <style>
+      #log {
+        width: 400px;
+        height: 300px;
+        border: 1px solid #ccc;
+        overflow-y: auto;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-family: monospace;
+        background-color: #f9f9f9;
+      }
+    </style>
   </head>
   <body>
     <h2>WebSocket Event Test</h2>
-    <textarea id="log" rows="10" cols="40" readonly></textarea><br />
+    <div id="log"></div>
     <input id="msg" type="text" placeholder="Type a message" />
     <button onclick="sendMessage()">Send</button>
 
     <script>
       const ws = new WebSocket("ws://localhost:8000/ws");
+      const log = document.getElementById("log");
+
       ws.onmessage = (event) => {
-        console.log(event.data)
-        const log = document.getElementById("log");
-        log.value += event.data + "\\n";
+        const p = document.createElement("p");
+        p.textContent = event.data;
+        log.appendChild(p);
+        log.scrollTop = log.scrollHeight; // Auto-scroll to bottom
       };
 
       function sendMessage() {
